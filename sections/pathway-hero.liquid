@@ -1,0 +1,262 @@
+<section class="hero-section" id="hero-{{ section.id }}">
+  <div class="hero-container">
+    
+    <div class="hero-content">
+      <span class="hero-subtitle">{{ section.settings.subtitle }}</span>
+      <h1 class="hero-title">{{ section.settings.title }}</h1>
+      <p class="hero-description">{{ section.settings.description }}</p>
+      
+      <div class="hero-tech-list">
+        {% for block in section.blocks %}
+          <div class="tech-item">
+            {% if block.settings.icon_svg != blank %}
+              {{ block.settings.icon_svg }}
+            {% endif %}
+            <span>{{ block.settings.tech_name }}</span>
+          </div>
+        {% endfor %}
+      </div>
+
+      <div class="hero-actions">
+        <a href="{{ section.settings.btn_url }}" class="explore-btn">
+          {{ section.settings.btn_text }}
+          <span class="btn-icon">↓</span>
+        </a>
+      </div>
+    </div>
+
+    <div class="hero-image-wrapper">
+      <div class="browser-frame">
+        <div class="browser-header">
+          <span class="dot"></span><span class="dot"></span><span class="dot"></span>
+        </div>
+        {% if section.settings.hero_image != blank %}
+          <img src="{{ section.settings.hero_image | image_url: width: 1000 }}" alt="Hero Preview">
+        {% else %}
+          {{ 'lifestyle-1' | placeholder_svg_tag: 'placeholder-svg' }}
+        {% endif %}
+      </div>
+    </div>
+
+  </div>
+</section>
+
+
+<style>
+.hero-section {
+  background-color: #06070a;
+  background-image: 
+    linear-gradient(to right, rgba(255,255,255,0.05) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(255,255,255,0.05) 1px, transparent 1px);
+  background-size: 10px 10px; 
+  padding: 160px 0 100px 0;
+  min-height: 90vh;
+  display: flex;
+  align-items: center;
+  overflow: hidden;
+  position: relative;
+}
+
+.hero-section::before {
+  content: "";
+  position: absolute;
+  width: 400px;
+  height: 400px;
+  background: radial-gradient(circle, rgba(214, 26, 94, 0.15) 0%, transparent 70%);
+  bottom: -100px;
+  left: -100px;
+  z-index: 1;
+}
+
+.hero-container {
+  max-width: 1320px;
+  margin: 0 auto;
+  padding: 0 20px;
+  display: grid;
+  grid-template-columns: 1fr 1.2fr;
+  gap: 60px;
+  align-items: center;
+  position: relative;
+  z-index: 2;
+}
+
+.hero-subtitle {
+  color:  #cc4e32;
+  font-style: italic;
+  font-weight: 600;
+  font-size: 20px;
+  display: block;
+  margin-bottom: 15px;
+}
+
+.hero-title {
+  color: white;
+  font-size: 50px;
+  font-weight: 700;
+  line-height: 1.1;
+  font-style: italic;
+  margin-bottom: 25px;
+  font-family: 'Poppins';
+}
+
+.hero-description {
+  color: #a0a0a0;
+  font-size: 18px;
+  line-height: 1.6;
+  max-width: 500px;
+  margin-bottom: 40px;
+}
+
+/* Tech List Styling */
+.hero-tech-list {
+  display: flex;
+  gap: 25px;
+  margin-bottom: 50px;
+}
+
+.tech-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  color: white;
+  font-weight: 500;
+  font-size: 14px;
+}
+
+.tech-item svg {
+  width: 24px;
+  height: 24px;
+  fill: #6366f1; /* Purple color from screenshot icons */
+}
+
+/* Explore Button */
+.explore-btn {
+  background: white;
+  color: black;
+  padding: 12px 12px 12px 30px;
+  border-radius: 50px;
+  text-decoration: none;
+  font-weight: 700;
+  font-size: 16px;
+  display: inline-flex;
+  align-items: center;
+  gap: 20px;
+  transition: transform 0.3s ease;
+}
+
+.btn-icon {
+  background: linear-gradient(135deg, #D61A5E, #FF7A00);
+  width: 35px;
+  height: 35px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+}
+
+/* Browser Frame Right Side */
+.browser-frame {
+  background: #1a1a1a;
+  border-radius: 12px;
+  padding: 5px;
+  box-shadow: 0 30px 60px rgba(0,0,0,0.5);
+  border: 1px solid rgba(255,255,255,0.1);
+}
+
+.browser-header {
+  padding: 10px 15px;
+  display: flex;
+  gap: 6px;
+}
+
+.dot {
+  width: 8px;
+  height: 8px;
+  background: #444;
+  border-radius: 50%;
+}
+
+.browser-frame img {
+  width: 100%;
+  border-radius: 0 0 8px 8px;
+  display: block;
+}
+
+@media (max-width: 990px) {
+  .hero-container { grid-template-columns: 1fr; text-align: center; }
+  .hero-description { margin: 0 auto 40px auto; }
+  .hero-tech-list { justify-content: center; }
+  .hero-title { font-size: 40px; }
+}
+</style>
+
+
+{% schema %}
+{
+  "name": "Pathway Hero",
+  "settings": [
+    {
+      "type": "text",
+      "id": "subtitle",
+      "label": "Subtitle",
+      "default": "The Next-Generation"
+    },
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Main Title",
+      "default": "Pathway - Shopify eCommerce Theme"
+    },
+    {
+      "type": "textarea",
+      "id": "description",
+      "label": "Description",
+      "default": "You can create your website in minutes with the help of countless amazing powerful features of Pathway."
+    },
+    {
+      "type": "image_picker",
+      "id": "hero_image",
+      "label": "Hero Image (Browser Preview)"
+    },
+    {
+      "type": "text",
+      "id": "btn_text",
+      "label": "Button Text",
+      "default": "Explore Demo"
+    },
+    {
+      "type": "url",
+      "id": "btn_url",
+      "label": "Button Link"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "tech",
+      "name": "Tech/Icon",
+      "settings": [
+        {
+          "type": "html",
+          "id": "icon_svg",
+          "label": "SVG Icon Code"
+        },
+        {
+          "type": "text",
+          "id": "tech_name",
+          "label": "Tech Name"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Pathway Hero",
+      "blocks": [
+        { "type": "tech", "settings": { "tech_name": "Shopify" } },
+        { "type": "tech", "settings": { "tech_name": "Liquid" } }
+      ]
+    }
+  ]
+}
+{% endschema %}

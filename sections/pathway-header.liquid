@@ -1,0 +1,201 @@
+{%- style -%}
+  :root {
+    --header-bg-initial: {{ section.settings.bg_color_initial }};
+    --header-bg-sticky: {{ section.settings.bg_color_sticky }};
+    --nav-link-initial: {{ section.settings.nav_link_initial }};
+    --nav-link-sticky: {{ section.settings.nav_link_sticky }};
+  }
+{%- endstyle -%}
+
+<header class="pathway-header {% if section.settings.make_sticky %}is-sticky{% endif %}" id="main-header">
+  <div class="header-container">
+    <div class="header-logo">
+      <a href="/" class="logo-text" style="color: var(--nav-link-initial);">Path<span>way</span></a>
+    </div>
+
+    <nav class="header-nav">
+      <ul class="nav-list">
+        {%- for link in section.settings.menu.links -%}
+          <li><a href="{{ link.url }}" class="nav-item">{{ link.title }}</a></li>
+        {%- endfor -%}
+      </ul>
+    </nav>
+
+    <div class="header-cta">
+      <a href="{{ section.settings.btn_url }}" class="gradient-btn">{{ section.settings.btn_text }}</a>
+    </div>
+  </div>
+</header>
+
+
+<script>
+  window.onscroll = function() {
+    const header = document.getElementById("main-header");
+    if (window.pageYOffset > 50) {
+      header.classList.add("scrolled");
+    } else {
+      header.classList.remove("scrolled");
+    }
+  };
+</script>
+
+<style>
+/* Import Poppins for that exact modern look */
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap');
+
+.pathway-header {
+  font-family: 'Poppins', sans-serif; /* Applied globally to header */
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  padding: 30px 0; /* Original padding from screenshot */
+  z-index: 1000;
+  background-color: var(--header-bg-initial);
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.pathway-header.is-sticky.scrolled {
+  position: fixed;
+  padding: 15px 0;
+  background-color: var(--header-bg-sticky);
+  box-shadow: 0 4px 20px rgba(0,0,0,0.15);
+}
+
+.header-container {
+  max-width: 1320px; /* Standard wide container */
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 20px;
+}
+
+/* Logo: Size and Boldness */
+.logo-text {
+  font-size: 32px; /* Large, prominent logo */
+  font-weight: 800; /* Extra bold */
+  color: var(--nav-link-initial);
+  text-decoration: none;
+  letter-spacing: -1.5px; /* Tighter letter spacing like the image */
+  line-height: 1;
+}
+
+.logo-text span {
+  color: #EF4444; /* Pathway Red */
+}
+
+/* Nav Menu: Spacing and Size */
+.nav-list {
+  display: flex;
+  list-style: none;
+  gap: 35px; /* Wide spacing between links */
+  margin: 0;
+  padding: 0;
+}
+
+.nav-item {
+  color: var(--nav-link-initial);
+  text-decoration: none;
+  font-size: 15px; /* Clean, readable menu size */
+  font-weight: 600; /* Semi-bold */
+  text-transform: capitalize;
+  transition: color 0.3s ease;
+}
+
+/* Button: Gradient and Roundness */
+.gradient-btn {
+  background: linear-gradient(90deg, #D61A5E 0%, #FF7A00 100%);
+  color: white !important;
+  padding: 14px 32px; /* Thick, clickable button */
+  border-radius: 50px;
+  text-decoration: none;
+  font-weight: 600;
+  font-size: 15px;
+  box-shadow: 0 4px 15px rgba(214, 26, 94, 0.3);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.gradient-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(214, 26, 94, 0.4);
+}
+
+/* Mobile Responsiveness */
+@media (max-width: 990px) {
+  .header-nav { display: none; } /* Hide menu on mobile for now */
+  .logo-text { font-size: 24px; }
+}
+</style>
+
+{% schema %}
+{
+  "name": "Pathway Header",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Sticky Settings"
+    },
+    {
+      "type": "checkbox",
+      "id": "make_sticky",
+      "label": "Enable Sticky Header",
+      "default": true
+    },
+    {
+      "type": "header",
+      "content": "Colors (Initial State)"
+    },
+    {
+      "type": "color",
+      "id": "bg_color_initial",
+      "label": "Background Color (Top)",
+      "default": "transparent"
+    },
+    {
+      "type": "color",
+      "id": "nav_link_initial",
+      "label": "Font Color (Top)",
+      "default": "#ffffff"
+    },
+    {
+      "type": "header",
+      "content": "Colors (Scrolled/Sticky State)"
+    },
+    {
+      "type": "color",
+      "id": "bg_color_sticky",
+      "label": "Background Color (Scroll)",
+      "default": "#000000"
+    },
+    {
+      "type": "color",
+      "id": "nav_link_sticky",
+      "label": "Font Color (Scroll)",
+      "default": "#ffffff"
+    },
+    {
+      "type": "link_list",
+      "id": "menu",
+      "label": "Menu",
+      "default": "main-menu"
+    },
+    {
+      "type": "text",
+      "id": "btn_text",
+      "label": "Button Text",
+      "default": "Purchase Now"
+    },
+    {
+      "type": "url",
+      "id": "btn_url",
+      "label": "Button Link"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Pathway Header"
+    }
+  ]
+}
+{% endschema %}
