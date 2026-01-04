@@ -296,6 +296,15 @@
         document.documentElement.classList.add('shopify-design-mode');
       }
     </script>
+    <script>
+
+  if (localStorage.getItem('color-theme') === 'dark' || (!('color-theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+    document.documentElement.classList.add('dark');
+  } else {
+    document.documentElement.classList.remove('dark');
+  }
+</script>
+    {{'tailwind.output.css' |  asset_url | stylesheet_tag}}
   </head>
 
   <body class="gradient{% if settings.animations_hover_elements != 'none' %} animate--hover-{{ settings.animations_hover_elements }}{% endif %}">
@@ -308,6 +317,7 @@
     {%- endif -%}
 
     {% sections 'header-group' %}
+    
 
     <main id="MainContent" class="content-for-layout focus-none" role="main" tabindex="-1">
       {{ content_for_layout }}

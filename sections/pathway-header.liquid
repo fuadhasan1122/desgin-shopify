@@ -7,7 +7,8 @@
   }
 {%- endstyle -%}
 
-<header class="pathway-header {% if section.settings.make_sticky %}is-sticky{% endif %}" id="main-header">
+<header class="pathway-header 
+{% if section.settings.make_sticky %}is-sticky{% endif %}" id="main-header">
   <div class="header-container">
     <div class="header-logo">
       <a href="/" class="logo-text" style="color: var(--nav-link-initial);">Path<span>way</span></a>
@@ -40,16 +41,16 @@
 </script>
 
 <style>
-/* Import Poppins for that exact modern look */
+
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap');
 
 .pathway-header {
-  font-family: 'Poppins', sans-serif; /* Applied globally to header */
+  font-family: 'Poppins', sans-serif;
   position: absolute;
   top: 0;
   left: 0;
   width: 100%;
-  padding: 30px 0; /* Original padding from screenshot */
+  padding: 30px 0;
   z-index: 1000;
   background-color: var(--header-bg-initial);
   transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
@@ -63,7 +64,7 @@
 }
 
 .header-container {
-  max-width: 1320px; /* Standard wide container */
+  max-width: 1320px; 
   margin: 0 auto;
   display: flex;
   align-items: center;
@@ -71,25 +72,25 @@
   padding: 0 20px;
 }
 
-/* Logo: Size and Boldness */
+
 .logo-text {
-  font-size: 32px; /* Large, prominent logo */
-  font-weight: 800; /* Extra bold */
+  font-size: 32px; 
+  font-weight: 800; 
   color: var(--nav-link-initial);
   text-decoration: none;
-  letter-spacing: -1.5px; /* Tighter letter spacing like the image */
+  letter-spacing: -1.5px; 
   line-height: 1;
 }
 
 .logo-text span {
-  color: #EF4444; /* Pathway Red */
+  color: #EF4444; 
 }
 
-/* Nav Menu: Spacing and Size */
+
 .nav-list {
   display: flex;
   list-style: none;
-  gap: 35px; /* Wide spacing between links */
+  gap: 35px;
   margin: 0;
   padding: 0;
 }
@@ -97,17 +98,17 @@
 .nav-item {
   color: var(--nav-link-initial);
   text-decoration: none;
-  font-size: 15px; /* Clean, readable menu size */
-  font-weight: 600; /* Semi-bold */
+  font-size: 15px; 
+  font-weight: 600;
   text-transform: capitalize;
   transition: color 0.3s ease;
 }
 
-/* Button: Gradient and Roundness */
+
 .gradient-btn {
   background: linear-gradient(90deg, #D61A5E 0%, #FF7A00 100%);
   color: white !important;
-  padding: 14px 32px; /* Thick, clickable button */
+  padding: 14px 32px;
   border-radius: 50px;
   text-decoration: none;
   font-weight: 600;
@@ -121,9 +122,9 @@
   box-shadow: 0 6px 20px rgba(214, 26, 94, 0.4);
 }
 
-/* Mobile Responsiveness */
+
 @media (max-width: 990px) {
-  .header-nav { display: none; } /* Hide menu on mobile for now */
+  .header-nav { display: none; }
   .logo-text { font-size: 24px; }
 }
 </style>

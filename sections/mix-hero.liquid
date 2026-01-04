@@ -1,0 +1,124 @@
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
+<script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+
+<style>
+  .hero-swiper { width: 100%; height: auto; border-radius: 1.5rem; overflow: hidden; }
+  .swiper-pagination-bullet-active { background: #000 !important; width: 24px; border-radius: 4px; }
+  .timer-box { font-variant-numeric: tabular-nums; }
+</style>
+
+<section class="max-w-[1400px] mx-auto px-6 py-8 dark:bg-gray-900 transition-colors">
+  <div class="swiper hero-swiper shadow-xl">
+    <div class="swiper-wrapper">
+      
+      {% for block in section.blocks %}
+        <div class="swiper-slide relative bg-[#1a1a1a] text-white min-h-[500px] flex items-center overflow-hidden" {{ block.shopify_attributes }}>
+          
+          <div class="container mx-auto px-12 grid lg:grid-cols-2 gap-8 items-center z-10 py-12">
+            
+            <div class="space-y-6">
+              {% if block.settings.end_date != blank %}
+                <div class="flex items-center gap-3 bg-white/10 backdrop-blur-md w-fit px-4 py-2 rounded-lg border border-white/20">
+                  <span class="text-yellow-400">⏱</span>
+                  <div class="countdown-timer flex gap-2 text-sm font-bold tracking-tighter" data-date="{{ block.settings.end_date }}">
+                    <span class="timer-box"><span class="days">00</span>d</span> :
+                    <span class="timer-box"><span class="hours">00</span>h</span> :
+                    <span class="timer-box"><span class="minutes">00</span>m</span> :
+                    <span class="timer-box"><span class="seconds">00</span>s</span>
+                  </div>
+                </div>
+              {% endif %}
+
+              <h2 class="text-5xl lg:text-7xl font-bold leading-[1.1]">
+                {{ block.settings.heading }}
+              </h2>
+              
+              <p class="text-gray-300 text-lg max-w-md">
+                {{ block.settings.subheading }}
+              </p>
+
+              <a href="{{ block.settings.button_link }}" class="inline-block bg-[#fde047] text-black px-10 py-4 rounded-xl font-extrabold hover:scale-105 transition-transform">
+                {{ block.settings.button_label }}
+              </a>
+            </div>
+
+            <div class="relative flex justify-center">
+              {% if block.settings.image != blank %}
+                <img src="{{ block.settings.image | image_url: width: 800 }}" class="w-full max-w-md object-contain drop-shadow-2xl">
+              {% else %}
+                {{ 'product-1' | placeholder_svg_tag: 'w-full h-80 opacity-50' }}
+              {% endif %}
+
+              {% if block.settings.discount_text != blank %}
+                <div class="absolute -top-4 -right-4 bg-[#fde047] text-black w-32 h-32 rounded-full flex flex-col items-center justify-center border-4 border-[#1a1a1a] shadow-2xl transform rotate-12">
+                   <span class="text-[10px] font-bold uppercase">Save Up to</span>
+                   <span class="text-3xl font-black">{{ block.settings.discount_text }}</span>
+                </div>
+              {% endif %}
+            </div>
+          </div>
+
+          <div class="absolute right-0 top-0 w-1/2 h-full bg-gradient-to-l from-white/5 to-transparent skew-x-12 translate-x-20"></div>
+        </div>
+      {% endfor %}
+
+    </div>
+
+    <div class="swiper-pagination !bottom-8"></div>
+    <div class="swiper-button-next !text-black bg-white w-12 h-12 rounded-full shadow-lg after:text-lg hidden lg:flex"></div>
+    <div class="swiper-button-prev !text-black bg-white w-12 h-12 rounded-full shadow-lg after:text-lg hidden lg:flex"></div>
+  </div>
+</section>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+  // Initialize Slider
+  const swiper = new Swiper('.hero-swiper', {
+    loop: true,
+    autoplay: { delay: 5000, disableOnInteraction: false },
+    pagination: { el: '.swiper-pagination', clickable: true },
+    navigation: { nextEl: '.swiper-button-next', prevEl: '.swiper-button-prev' },
+  });
+
+  // Countdown Logic
+  function updateTimers() {
+    document.querySelectorAll('.countdown-timer').forEach(timer => {
+      const targetDate = new Date(timer.dataset.date).getTime();
+      const now = new Date().getTime();
+      const distance = targetDate - now;
+
+      if (distance < 0) return;
+
+      timer.querySelector('.days').innerText = Math.floor(distance / (1000 * 60 * 60 * 24)).toString().padStart(2, '0');
+      timer.querySelector('.hours').innerText = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)).toString().padStart(2, '0');
+      timer.querySelector('.minutes').innerText = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60)).toString().padStart(2, '0');
+      timer.querySelector('.seconds').innerText = Math.floor((distance % (1000 * 60)) / 1000).toString().padStart(2, '0');
+    });
+  }
+  setInterval(updateTimers, 1000);
+  updateTimers();
+});
+</script>
+
+{% schema %}
+{
+  "name": "Hero Slider w/ Timer",
+  "settings": [],
+  "blocks": [
+    {
+      "type": "slide",
+      "name": "Slide",
+      "settings": [
+        { "type": "image_picker", "id": "image", "label": "Product Image" },
+        { "type": "text", "id": "heading", "label": "Heading", "default": "Electronics Sale Live Now" },
+        { "type": "text", "id": "subheading", "label": "Subheading", "default": "Your next gadget is waiting." },
+        { "type": "text", "id": "discount_text", "label": "Discount (e.g. 60%)", "default": "60%" },
+        { "type": "text", "id": "button_label", "label": "Button Label", "default": "Shop Now" },
+        { "type": "url", "id": "button_link", "label": "Button Link" },
+        { "type": "text", "id": "end_date", "label": "End Date (MM/DD/YYYY HH:MM:SS)", "default": "01/30/2026 23:59:59" }
+      ]
+    }
+  ],
+  "presets": [{ "name": "Mix hero" }]
+}
+{% endschema %}
