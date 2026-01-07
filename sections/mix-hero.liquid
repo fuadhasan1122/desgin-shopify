@@ -1,207 +1,299 @@
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
-<script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300..800;1,300..800&display=swap" rel="stylesheet">
+<script src="https://cdn.tailwindcss.com"></script>
+
+<script>
+  tailwind.config = {
+    darkMode: 'class',
+    theme: {
+      extend: {
+        fontFamily: {
+          sans: ['"Open Sans"', 'sans-serif'],
+        },
+      },
+    },
+  }
+</script>
 
 <style>
-  .hero-swiper-container {
-    width: 100%;
-    height: 650px;
-    border-radius: 1.5rem;
-    overflow: hidden;
-    position: relative;
-  }
-  .swiper {
-    width: 100%;
-    height: 100%;
-  }
+  #HeaderLocalizationForm { margin: 0; padding: 0; }
+  .no-scrollbar::-webkit-scrollbar { display: none; }
+  body { transition: background-color 0.3s ease; }
+  
+  
+ .sticker-badge {
+  /* This makes it a perfect circle */
+  border-radius: 50%; 
+  
+  /* Layout and Sizing */
+  position: absolute;
+  width: 120px;
+  height: 120px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  z-index: 30;
+  
+  /* Visual Style */
+  background: #fde047;
+  box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+  transform: rotate(5deg);
+  overflow: hidden; /* Ensures the peel doesn't leak out */
+}
 
-  /* The "Save Up To" Badge Styling */
-  .discount-sticker {
-    background-color: #fde047;
-    /* Bright Yellow */
-    color: #000;
-    width: 120px;
-    height: 120px;
-    border-radius: 50%;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    font-weight: 900;
-    border: 4px solid white;
-    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
-    position: absolute;
-    top: -20px;
-    right: -20px;
-    transform: rotate(12deg);
-    z-index: 50;
-    /* Ensures it sits on top of the image */
-  }
-
-  .slide-overlay {
-    position: absolute;
-    inset: 0;
-    background: linear-gradient(90deg, rgba(0,0,0,0.8) 0%, rgba(0,0,0,0.2) 100%);
-    z-index: 10;
-  }
+/* The "Peel" part of the sticker to match your picture */
+.sticker-badge::after {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  width: 40px;
+  height: 40px;
+  background: linear-gradient(135deg, transparent 50%, #ffffff 80%);
+  border-radius: 0 0 50% 0; /* Matches the curve of the circle */
+  opacity: 0.9;
+}
+  .active-dot { @apply w-10 bg-black dark:bg-white rounded-full transition-all duration-300; }
+  .inactive-dot { @apply w-2.5 bg-gray-300 dark:bg-gray-600 rounded-full cursor-pointer; }
+  .slide-hidden { display: none; }
+  .slide-active { display: grid; animation: heroFade 0.6s ease-out; }
+  @keyframes heroFade { from { opacity: 0; transform: scale(0.98); } to { opacity: 1; transform: scale(1); } }
 </style>
 
-<section class="max-w-[1400px] mx-auto px-4 py-8 dark:bg-gray-900 transition-colors">
-  <div class="hero-swiper-container shadow-2xl">
-    <div class="swiper myHeroSwiper">
-      <div class="swiper-wrapper">
+<header id="MainHeader" class="bg-white text-gray-900 dark:bg-gray-900 dark:text-white border-b border-gray-200 dark:border-gray-800 transition-colors duration-300 font-sans">
+  
+  <div class="max-w-[1400px] mx-auto px-6 py-4 flex items-center justify-between gap-10">
+    <div class="flex items-center gap-4 flex-shrink-0">
+      <a href="/" class="flex items-center gap-2">
+        <div class="bg-[#3b5998] text-white w-10 h-10 rounded-full flex items-center justify-center font-bold text-xl">M</div>
+        <span class="text-3xl font-bold tracking-tight">Mix</span>
+      </a>
+      <button class="bg-black text-white dark:bg-white dark:text-black px-6 py-2.5 rounded-lg flex items-center gap-2 hover:opacity-80 transition">
+        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 12h16m-7 6h7"></path></svg>
+        <span class="font-bold">Menu</span>
+      </button>
+    </div>
 
-        {% for block in section.blocks %}
-          <div class="swiper-slide flex items-center" {{ block.shopify_attributes }}>
+    <div class="flex-grow max-w-3xl">
+      <form action="{{ routes.search_url }}" method="get" class="flex items-center bg-[#f3f4f6] dark:bg-gray-800 rounded-xl overflow-hidden border border-transparent focus-within:ring-1 focus-within:ring-gray-300 transition">
+        <select name="type" class="bg-transparent pl-4 pr-2 py-3 text-sm font-medium outline-none cursor-pointer appearance-none dark:text-gray-200">
+            <option value="product">All products</option>
+        </select>
+        <input type="text" name="q" placeholder="Search for anything..." class="bg-transparent grow px-4 py-3 outline-none text-[15px] dark:text-gray-200 placeholder-gray-500">
+        <button type="submit" class="pr-5 text-gray-500 hover:text-black dark:hover:text-white">
+           <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2"><path d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path></svg>
+        </button>
+      </form>
+    </div>
 
-            <div class="absolute inset-0 z-0">
-              {% if block.settings.bg_image != blank %}
-                <img
-                  src="{{ block.settings.bg_image | image_url: width: 2000 }}"
-                  class="w-full h-full object-cover"
-                  alt="Background">
-              {% else %}
-                <div class="w-full h-full bg-gray-800"></div>
-              {% endif %}
-              <div class="slide-overlay"></div>
-            </div>
+    <div class="flex items-center gap-8 flex-shrink-0">
+      <a href="/account/login" class="flex flex-col items-center gap-1 hover:text-blue-600 transition">
+        <svg class="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="1.5"><path d="M15.75 6a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0zM4.501 20.118a7.5 7.5 0 0114.998 0A17.933 17.933 0 0112 21.75c-2.676 0-5.216-.584-7.499-1.632z" /></svg>
+        <span class="text-[11px] font-bold">Login</span>
+      </a>
+      <a href="/cart" class="flex flex-col items-center gap-1 relative">
+        <svg class="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="1.5"><path d="M15.75 10.5V6a3.75 3.75 0 10-7.5 0v4.5m11.356-1.993l1.263 12c.07.665-.45 1.243-1.119 1.243H4.25a1.125 1.125 0 01-1.12-1.243l1.264-12A1.125 1.125 0 015.513 7.5h12.974c.576 0 1.059.435 1.119 1.007z" /></svg>
+        <span class="absolute -top-1 -right-1 bg-black dark:bg-blue-600 text-white text-[10px] rounded-full w-4 h-4 flex items-center justify-center">{{ cart.item_count }}</span>
+        <span class="text-[11px] font-bold">Cart</span>
+      </a>
+    </div>
+  </div>
 
-            <div class="container mx-auto px-8 lg:px-20 relative z-20 grid lg:grid-cols-2 items-center h-full gap-10">
+  <div class="max-w-[1400px] mx-auto px-6 py-2 flex items-center justify-between text-[14px] font-semibold border-t border-gray-100 dark:border-gray-800">
+    <nav class="flex items-center gap-6">
+      <a href="/collections/all" class="bg-[#fde047] text-black px-3 py-1.5 rounded-md font-bold flex items-center gap-1">🔥 Sale</a>
+      <div class=" md:flex items-center gap-6 text-gray-800 dark:text-gray-200">
+        <a href="#" class="hover:text-blue-600">Features</a>
+        <a href="#" class="hover:text-blue-600">Electronics</a>
+        <a href="#" class="hover:text-blue-600">Art</a>
+        <a href="#" class="hover:text-blue-600">Books</a>
+        <a href="#" class="hover:text-blue-600">More</a>
+      </div>
+    </nav>
 
-              <div class="text-white space-y-6">
-                {% if block.settings.end_date != blank %}
-                  <div class="flex items-center gap-3 bg-white/10 backdrop-blur-md w-fit px-4 py-2 rounded-lg border border-white/20">
-                    <span class="text-yellow-400 font-bold">⏱</span>
-                    <div class="countdown-timer flex gap-2 font-mono text-sm font-bold" data-date="{{ block.settings.end_date }}">
-                      <span>
-                        <span class="days">00</span>d</span>:
-                      <span>
-                        <span class="hours">00</span>h</span>:
-                      <span>
-                        <span class="minutes">00</span>m</span>:
-                      <span>
-                        <span class="seconds">00</span>s</span>
-                    </div>
-                  </div>
-                {% endif %}
+    <div class="flex items-center gap-6">
+      {%- form 'localization', id: 'HeaderLocalizationForm', class: 'flex items-center gap-6' -%}
+        <div class="relative dark:text-gray-300">
+          <select name="country_code" onchange="this.form.submit()" class="bg-transparent appearance-none outline-none cursor-pointer pr-4 font-bold">
+            {%- for country in localization.available_countries -%}
+              <option value="{{ country.iso_code }}" {%- if country.iso_code == localization.country.iso_code -%}selected{%- endif -%}>
+                {{ country.name }} ({{ country.currency.symbol }})
+              </option>
+            {%- endfor -%}
+          </select>
+        </div>
+        <div class="relative dark:text-gray-300">
+          <select name="locale_code" onchange="this.form.submit()" class="bg-transparent appearance-none outline-none cursor-pointer pr-4 font-bold">
+            {%- for language in localization.available_languages -%}
+              <option value="{{ language.iso_code }}" {%- if language.iso_code == localization.language.iso_code -%}selected{%- endif -%}>
+                {{ language.endonym_name | capitalize }}
+              </option>
+            {%- endfor -%}
+          </select>
+        </div>
+      {%- endform -%}
 
-                <h2 class="text-5xl lg:text-7xl font-black leading-tight">{{ block.settings.heading }}</h2>
-                <p class="text-lg text-gray-200 max-w-md">{{ block.settings.subheading }}</p>
+      <button id="theme-toggle" class="flex items-center gap-2 text-gray-600 dark:text-gray-400 hover:text-black dark:hover:text-white transition">
+        <span class="font-bold">Dark Mode</span>
+        <svg id="theme-icon" class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"></path></svg>
+      </button>
+    </div>
+  </div>
+</header>
 
-                <a href="{{ block.settings.button_link }}" class="inline-block bg-[#fde047] text-black px-10 py-4 rounded-xl font-black hover:scale-105 transition-transform shadow-lg">
-                  {{ block.settings.button_label }}
-                </a>
-              </div>
+<section class="max-w-[1400px] mx-auto py-2 transition-colors duration-300" id="HeroSection-{{ section.id }}">
+  <div class="relative bg-[#1a1a1a] dark:bg-black rounded-[32px] overflow-hidden min-h-[500px]">
+    {% for block in section.blocks %}
+    <div class="hero-slide {% if forloop.first %}slide-active{% else %}slide-hidden{% endif %} grid md:grid-cols-2  min-h-[560px] items-center px-0 py-5" {{ block.shopify_attributes }}>
+      
+      {% if block.settings.bg_image != blank %}
+        <img src="{{ block.settings.bg_image | img_url: '1400x' }}" class="absolute inset-0 w-full h-full object-cover opacity-40 z-0">
+      {% endif %}
 
-              <div class="hidden lg:flex justify-center relative">
-                <div class="relative">
-                  {% if block.settings.product_image != blank %}
-                    <img src="{{ block.settings.product_image | image_url: width: 600 }}" class="max-h-[450px] object-contain drop-shadow-2xl">
-                  {% endif %}
+      <div class="relative z-10 space-y-6 py-12">
+        {% if block.settings.show_timer %}
+        <div class="inline-flex items-center gap-3 bg-black/40 backdrop-blur-md px-4 py-2 rounded-lg border border-white/10 text-white">
+          <svg class="w-5 h-5 text-[#fde047]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+          <span class="countdown-display font-bold text-[16px]" data-date="{{ block.settings.end_date }}">00 d : 00 h : 00 m : 00 s</span>
+        </div>
+        {% endif %}
 
-                  {% if block.settings.discount_text != blank %}
-                    <div class="discount-sticker">
-                      <span class="text-[10px] uppercase tracking-tighter">Save Up to</span>
-                      <span class="text-4xl leading-none">{{ block.settings.discount_text }}</span>
-                    </div>
-                  {% endif %}
-                </div>
-              </div>
+        <h1 class="text-5xl md:text-[64px] font-[800] leading-[1.1]" style="color: {{ block.settings.heading_color }};">
+          {{ block.settings.heading }}
+        </h1>
+        <p class="text-gray-400 text-xl max-w-lg">{{ block.settings.subtext }}</p>
 
+        <a href="{{ block.settings.btn_link }}" class="inline-block bg-[#fde047] text-black font-bold px-10 py-4 rounded-xl hover:scale-105 transition-transform">
+          {{ block.settings.btn_label }}
+        </a>
+      </div>
+
+      <div class="relative z-10 flex justify-center items-center h-full">
+        <div class="relative max-w-md w-full">
+          {% if block.settings.product_image != blank %}
+            <img src="{{ block.settings.product_image | img_url: '800x' }}" class="w-full h-auto drop-shadow-2xl">
+          {% endif %}
+          <div class="sticker-badge -top-4 -right-4 md:top-0 md:-right-10">
+            <span class="text-[11px] uppercase tracking-tighter">Save Up to</span>
+            <div class="flex items-start">
+              <span class="text-4xl leading-none">{{ block.settings.discount_val }}</span>
+              <span class="text-xl font-bold mt-1">%</span>
             </div>
           </div>
-        {% endfor %}
-
+        </div>
       </div>
-      <div class="swiper-pagination"></div>
     </div>
+    {% endfor %}
+
+    <button id="NextBtn-{{ section.id }}" class="absolute right-6 top-1/2 -translate-y-1/2 bg-white dark:bg-gray-800 dark:text-white w-14 h-14 rounded-full flex items-center justify-center shadow-2xl z-30">
+      <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="3"><path d="M9 5l7 7-7 7"></path></svg>
+    </button>
   </div>
 </section>
 
 <script>
-  window.addEventListener('load', function() {
-    const swiper = new Swiper('.myHeroSwiper', {
-      loop: true,
-      speed: 1000,
-      effect: 'fade',
-      autoplay: { delay: 5000 },
-      pagination: { el: '.swiper-pagination', clickable: true },
-    });
-
-    function startTimers() {
-      document.querySelectorAll('.countdown-timer').forEach(timer => {
-        const endTime = new Date(timer.dataset.date).getTime();
-        const update = () => {
-          const diff = endTime - new Date().getTime();
-          if (diff < 0) return;
-          timer.querySelector('.days').innerText = Math.floor(diff / 86400000).toString().padStart(2, '0');
-          timer.querySelector('.hours').innerText = Math.floor((diff % 86400000) / 3600000).toString().padStart(2, '0');
-          timer.querySelector('.minutes').innerText = Math.floor((diff % 3600000) / 60000).toString().padStart(2, '0');
-          timer.querySelector('.seconds').innerText = Math.floor((diff % 60000) / 1000).toString().padStart(2, '0');
-        };
-        setInterval(update, 1000);
-        update();
-      });
+document.addEventListener('DOMContentLoaded', function() {
+  // THEME TOGGLE (Page Wide)
+  const themeToggleBtn = document.getElementById('theme-toggle');
+  const htmlElement = document.documentElement;
+  
+  const updateTheme = (isDark) => {
+    if (isDark) {
+      htmlElement.classList.add('dark');
+      localStorage.setItem('color-theme', 'dark');
+    } else {
+      htmlElement.classList.remove('dark');
+      localStorage.setItem('color-theme', 'light');
     }
-    startTimers();
+  };
+
+  // On Load
+  if (localStorage.getItem('color-theme') === 'dark' || (!('color-theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+    updateTheme(true);
+  }
+
+  themeToggleBtn.addEventListener('click', () => {
+    updateTheme(!htmlElement.classList.contains('dark'));
   });
+
+  // SLIDER & TIMER
+  const sectionId = "{{ section.id }}";
+  const slides = document.querySelectorAll(`#HeroSection-${sectionId} .hero-slide`);
+  const nextBtn = document.querySelector(`#NextBtn-${sectionId}`);
+  let currentIdx = 0;
+
+  function runTimer() {
+    document.querySelectorAll('.countdown-display').forEach(el => {
+      const end = new Date(el.dataset.date).getTime();
+      const diff = end - new Date().getTime();
+      if (diff < 0) return;
+      const d = Math.floor(diff/86400000), h = Math.floor((diff%86400000)/3600000), m = Math.floor((diff%3600000)/60000), s = Math.floor((diff%60000)/1000);
+      el.innerHTML = `${d.toString().padStart(2,'0')} <span class="text-gray-400">d :</span> ${h.toString().padStart(2,'0')} <span class="text-gray-400">h :</span> ${m.toString().padStart(2,'0')} <span class="text-gray-400">m :</span> ${s.toString().padStart(2,'0')} <span class="text-gray-400">s</span>`;
+    });
+  }
+  setInterval(runTimer, 1000);
+
+  nextBtn?.addEventListener('click', () => {
+    slides[currentIdx].classList.replace('slide-active', 'slide-hidden');
+    currentIdx = (currentIdx + 1) % slides.length;
+    slides[currentIdx].classList.replace('slide-hidden', 'slide-active');
+  });
+});
 </script>
 
+
 {% schema %}
-  {
-    "name": "Hero Slider Final",
-    "blocks": [
-      {
-        "type": "slide",
-        "name": "Slide",
-        "settings": [
-          {
-            "type": "image_picker",
-            "id": "bg_image",
-            "label": "Background Image"
-          },
-          {
-            "type": "image_picker",
-            "id": "product_image",
-            "label": "Floating Product Image"
-          },
-          {
-            "type": "text",
-            "id": "discount_text",
-            "label": "Discount Text (e.g. 60%)",
-            "default": "60%"
-          },
-          {
-            "type": "text",
-            "id": "heading",
-            "label": "Heading",
-            "default": "Flash Sale Live"
-          }, {
-            "type": "text",
-            "id": "subheading",
-            "label": "Subheading",
-            "default": "Get the best gadgets at half price."
-          }, {
-            "type": "text",
-            "id": "button_label",
-            "label": "Button Label",
-            "default": "Shop Now"
-          }, {
-            "type": "url",
-            "id": "button_link",
-            "label": "Link"
-          }, {
-            "type": "text",
-            "id": "end_date",
-            "label": "Date (MM/DD/YYYY HH:MM:SS)",
-            "default": "12/31/2026 23:59:59"
-          }
-        ]
-      }
-    ],
-    "presets": [
-      {
-        "name": "Hero Slider Final"
-      }
-    ]
-  }
+{
+  "name": "Header & Hero Combo",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Header Branding"
+    },
+    {
+      "type": "image_picker",
+      "id": "logo",
+      "label": "Custom Logo"
+    },
+    {
+      "type": "range",
+      "id": "logo_width",
+      "min": 50,
+      "max": 250,
+      "step": 10,
+      "default": 100,
+      "unit": "px",
+      "label": "Logo Width"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "slide",
+      "name": "Hero Slide",
+      "settings": [
+        { "type": "image_picker",
+          "id": "product_image", 
+          "label": "Product Image (Transparent)" 
+        },
+
+        { "type": "image_picker", 
+          "id": "bg_image", 
+          "label": "Background Texture" 
+      },
+        { "type": "text", "id": "heading", "label": "Heading", "default": "Electronics Sale Live Now" },
+        { "type": "color", "id": "heading_color", "label": "Heading Color", "default": "#ffffff" },
+        { "type": "textarea", "id": "subtext", "label": "Subtext", "default": "Up to 60% off during our flash sale." },
+        { "type": "text", "id": "btn_label", "label": "Button Label", "default": "Shop Now" },
+        { "type": "url", "id": "btn_link", "label": "Button Link" },
+        { "type": "header", "content": "Sticker & Timer" },
+        { "type": "text", "id": "discount_val", "label": "Discount Percent", "default": "60" },
+        { "type": "checkbox", "id": "show_timer", "label": "Show Timer", "default": true },
+        { "type": "text", "id": "end_date", "label": "End Date (YYYY/MM/DD HH:MM)", "default": "2026/12/31 23:59" }
+      ]
+    }
+  ],
+  "presets": [{ "name": "Header & Hero Combo" }]
+}
 {% endschema %}
