@@ -28,7 +28,7 @@
 
 <header id="MainHeader" class="bg-white text-gray-900 dark:bg-gray-900 dark:text-white border-b border-gray-200 dark:border-gray-800 transition-colors duration-300 font-sans">
   
-  <div class="max-w-[1400px] mx-auto px-6 py-4 flex items-center justify-between gap-10">
+  <div class="max-w-[1400px] mx-auto px-6 py-4 flex items-center justify-between gap-1">
     
     <div class="flex items-center gap-4 flex-shrink-0">
       <a href="/" class="flex items-center gap-2">
@@ -37,17 +37,17 @@
         </div>
         <span class="text-3xl font-bold tracking-tight">Mix</span>
       </a>
-      <button class="bg-black text-white px-6 py-2.5 rounded-lg flex items-center gap-2 hover:bg-gray-800 transition">
+      <button class="bg-black ml-[60px]  text-white px-6 py-2.5 rounded-lg flex items-center gap-2 hover:bg-gray-800 transition">
         <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 12h16m-7 6h7"></path></svg>
         <span class="font-bold">Menu</span>
       </button>
     </div>
 
-    <div class="flex-grow max-w-3xl">
+    <div class=" flex-auto max-w-7xl ">
       <form action="{{ routes.search_url }}" method="get" role="search" class="flex items-center bg-[#f3f4f6] dark:bg-gray-800 rounded-xl overflow-hidden border border-transparent focus-within:ring-1 focus-within:ring-gray-300 transition">
         <div class="relative flex items-center">
-            <select name="type" class="bg-transparent pl-4 pr-8 py-3 text-sm font-medium outline-none cursor-pointer appearance-none dark:text-gray-200">
-                <option value="product">All products</option>
+            <select name="type" class="bg-transparent pl-10 pr-10   text-sm font-medium outline-none cursor-pointer appearance-none dark:text-gray-200">
+                <option  value="product">All products</option>
             </select>
             <svg class="w-4 h-4 absolute right-2 pointer-events-none text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
         </div>
