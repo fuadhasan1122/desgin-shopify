@@ -7,14 +7,13 @@
   }
 {%- endstyle -%}
 
-<header class="pathway-header 
-{% if section.settings.make_sticky %}is-sticky{% endif %}" id="main-header">
+<header class="pathway-header {% if section.settings.make_sticky %}is-sticky{% endif %}" id="main-header">
   <div class="header-container">
     <div class="header-logo">
       <a href="/" class="logo-text" style="color: var(--nav-link-initial);">Path<span>way</span></a>
     </div>
 
-    <nav class="header-nav">
+    <nav class="header-nav" id="nav-menu">
       <ul class="nav-list">
         {%- for link in section.settings.menu.links -%}
           <li><a href="{{ link.url }}" class="nav-item">{{ link.title }}</a></li>
@@ -24,6 +23,11 @@
 
     <div class="header-cta">
       <a href="{{ section.settings.btn_url }}" class="gradient-btn">{{ section.settings.btn_text }}</a>
+      <button class="mobile-toggle" id="mobile-toggle" aria-label="Menu">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
     </div>
   </div>
 </header>
@@ -122,6 +126,72 @@
   box-shadow: 0 6px 20px rgba(214, 26, 94, 0.4);
 }
 
+/* Mobile Toggle Button */
+.mobile-toggle {
+  display: none;
+  flex-direction: column;
+  gap: 6px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 5px;
+  z-index: 1001;
+}
+
+.mobile-toggle span {
+  display: block;
+  width: 28px;
+  height: 3px;
+  background-color: var(--nav-link-initial);
+  transition: 0.3s;
+  border-radius: 2px;
+}
+
+/* Scrolled state for toggle */
+.scrolled .mobile-toggle span {
+  background-color: var(--nav-link-sticky);
+}
+
+/* Mobile State */
+@media (max-width: 990px) {
+  .mobile-toggle { display: flex; }
+
+  .header-nav {
+    position: fixed;
+    top: 0;
+    right: -100%; /* Hidden by default */
+    width: 80%;
+    max-width: 300px;
+    height: 100vh;
+    background: var(--header-bg-sticky); /* Uses sticky color for drawer */
+    padding: 100px 40px;
+    transition: 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    box-shadow: -10px 0 30px rgba(0,0,0,0.2);
+  }
+
+  .header-nav.is-open {
+    right: 0;
+  }
+
+  .nav-list {
+    flex-direction: column;
+    gap: 25px;
+  }
+
+  .nav-item {
+    font-size: 20px;
+    color: var(--nav-link-sticky) !important;
+  }
+
+  .header-cta .gradient-btn {
+    display: none; /* Hide button on mobile or move it inside nav */
+  }
+
+  /* Hamburger Animation */
+  .mobile-toggle.is-active span:nth-child(1) { transform: translateY(9px) rotate(45deg); }
+  .mobile-toggle.is-active span:nth-child(2) { opacity: 0; }
+  .mobile-toggle.is-active span:nth-child(3) { transform: translateY(-9px) rotate(-45deg); }
+}
 
 @media (max-width: 990px) {
   .header-nav { display: none; }
