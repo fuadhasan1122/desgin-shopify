@@ -1,0 +1,169 @@
+<script src="https://cdn.tailwindcss.com"></script>
+
+
+<!-- Taiaga Announcement Bar Section -->
+<div class="z-50 py-5 px-4" 
+     style="background-color: {{ section.settings.bg_color }}; color: {{ section.settings.text_color }};">
+  
+  <div class="container mx-auto flex flex-row justify-between items-center text-[15px] md:text-xs font-bold uppercase tracking-wider gap-2">
+    
+    <a href="{{ section.settings.link_1 }}" class="flex-1 text-left italic hover:opacity-80 text-[15px] transition-opacity whitespace-nowrap underline">
+      {{ section.settings.text_1 }}
+    </a>
+
+    <a href="{{ section.settings.link_2 }}" class="flex-1 text-center text-[15px] hover:opacity-80 transition-opacity">
+      {{ section.settings.text_2 }}
+    </a>
+
+    <a href="{{ section.settings.link_3 }}" class="flex-1 text-right text-[15px] italic hover:opacity-80 transition-opacity whitespace-nowrap underline">
+      {{ section.settings.text_3 }}
+    </a>
+    
+  </div>
+</div>
+
+
+<!--Header-->
+
+
+<section class="relative min-h-[500px] md:min-h-[1000px] flex flex-col items-center  overflow-hidden bg-cover bg-center bg-no-repeat " 
+         style="background-image: url('{{ section.settings.hero_bg_image | img_url: '1400x' }}')">
+  
+  <header class="w-full z-50 flex items-center justify-between px-6 md:px-12 py-8 text-black-800 font-bold uppercase text-sm text-[15px]">
+    
+    <nav class="flex items-center space-x-8 text-[15px]">
+      <button class="md:hidden" aria-label="Menu">
+        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7"></path></svg>
+      </button>
+      <div class="flex space-x-6">
+        <a href="/" class="hover:text-pink-800 text-[15px]transition-colors upeercase">Home</a>
+        <a href="/collections/all" class="hover:text-pink-800 text-[15px] transition-colors">Shop</a>
+        <a href="/pages/about" class="hover:text-pink-800 text-[15px] transition-colors">About</a>
+      </div>
+    </nav>
+    
+    <div class="absolute left-1/2 -translate-x-1/2">
+      {% if section.settings.logo_img != blank %}
+        <a href="/">
+          <img src="{{ section.settings.logo_img | img_url: '250x' }}" alt="{{ shop.name }}" class="mt-10 pt-5 w-32 md:w-48">
+        </a>
+      {% else %}
+        <a href="/" class="text-4xl font-black lowercase italic no-underline text-black" style="font-family: cursive;">Taiga</a>
+      {% endif %}
+    </div>
+
+    <div class="flex items-center space-x-5">
+      <div class="w-7 h-7 rounded-full overflow-hidden border border-gray-200 flex-shrink-0 cursor-pointer shadow-sm">
+        <img src="https://flagcdn.com/w80/us.png" alt="USA" class="w-full h-full object-cover">
+      </div>
+      <button aria-label="Search" class="hover:scale-110 transition-transform">
+        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2.5"><path d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path></svg>
+      </button>
+      <button aria-label="Account" class="hover:scale-110 transition-transform">
+        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2.5"><path d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"></path></svg>
+      </button>
+      <button aria-label="Cart" class="hover:scale-110 transition-transform relative">
+        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2.5"><path d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"></path></svg>
+      </button>
+    </div>
+  </header>
+
+  <div class="absolute bottom-[-2px] left-0 w-full z-30 pointer-events-none">
+    <svg viewBox="0 0 1440 320" xmlns="http://www.w3.org/2000/svg" class="w-full h-auto">
+      <path fill="#ffffff" d="M0,160L48,176C96,192,192,224,288,224C384,224,480,192,576,165.3C672,139,768,117,864,128C960,139,1056,181,1152,197.3C1248,213,1344,203,1392,197.3L1440,192L1440,320L1392,320C1344,320,1248,320,1152,320C1056,320,960,320,864,320C768,320,672,320,576,320C480,320,384,320,288,320C192,320,96,320,48,320L0,320Z"></path>
+    </svg>
+  </div>
+</section>
+
+
+
+
+
+{% schema %}
+{
+  "name": "Taiaga Announcement Bar",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Colors"
+    },
+    {
+      "type": "color",
+      "id": "bg_color",
+      "label": "Background Color",
+      "default": "#e50b9c"
+    },
+    {
+      "type": "color",
+      "id": "text_color",
+      "label": "Text Color",
+      "default": "#ffffff"
+    },
+    {
+      "type": "header",
+      "content": "Message 1 (Left)"
+    },
+    {
+      "type": "text",
+      "id": "text_1",
+      "label": "Text",
+      "default": "Bottles: Buy 5 Get 1 Free!"
+    },
+    {
+      "type": "url",
+      "id": "link_1",
+      "label": "Link"
+    },
+    {
+      "type": "header",
+      "content": "Message 2 (Center)"
+    },
+    {
+      "type": "text",
+      "id": "text_2",
+      "label": "Text",
+      "default": "Free Shipping to orders above $99"
+    },
+    {
+      "type": "url",
+      "id": "link_2",
+      "label": "Link"
+    },
+    {
+      "type": "header",
+      "content": "Message 3 (Right)"
+    },
+    {
+      "type": "text",
+      "id": "text_3",
+      "label": "Text",
+      "default": "Now Available in Cans!"
+    },
+    {
+      "type": "url",
+      "id": "link_3",
+      "label": "Link"
+    },
+    {
+  "type": "header",
+  "content": "Header & Hero Images"
+},
+{
+  "type": "image_picker",
+  "id": "hero_bg_image",
+  "label": "Hero Background Image",
+  "info": "Upload the image containing the gradient, bottles, and 'Buy 5' text."
+},
+{
+  "type": "image_picker",
+  "id": "logo_img",
+  "label": "Logo Image"
+}
+  ],
+  "presets": [
+    {
+      "name": "Taiaga Announcement Bar"
+    }
+  ]
+}
+{% endschema %}

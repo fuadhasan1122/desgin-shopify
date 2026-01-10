@@ -1,6 +1,6 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300..800;1,300..800&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
 
 <script src="https://cdn.tailwindcss.com"></script>
 
@@ -10,7 +10,6 @@
     theme: {
       extend: {
         fontFamily: {
-          
           sans: ['"Open Sans"', 'sans-serif'],
         },
       },
@@ -20,113 +19,97 @@
 
 <style>
   #HeaderLocalizationForm { margin: 0; padding: 0; }
-  .no-scrollbar::-webkit-scrollbar { display: none; }
-  
-  
   body { transition: background-color 0.3s ease; }
+  /* Match the specific gray in the image for search bar */
+  .bg-search { background-color: #f3f4f6; }
+  .dark .bg-search { background-color: #1f2937; }
 </style>
 
 <header id="MainHeader" class="bg-white text-gray-900 dark:bg-gray-900 dark:text-white border-b border-gray-200 dark:border-gray-800 transition-colors duration-300 font-sans">
   
-  <div class="max-w-[1400px] mx-auto px-6 py-4 flex items-center justify-between gap-1">
+  <div class="max-w-[1380px] mx-auto px-6 py-4 flex items-center gap-6">
     
-    <div class="flex items-center gap-4 flex-shrink-0">
+    <div class="flex items-center gap-16">
       <a href="/" class="flex items-center gap-2">
-        <div class="bg-[#3b5998] text-white w-10 h-10 rounded-full flex items-center justify-center font-bold text-xl">
-            M
-        </div>
-        <span class="text-3xl font-bold tracking-tight">Mix</span>
+        <div class="bg-[#3b5998] text-white w-11 h-11 rounded-full flex items-center justify-center font-bold text-2xl">M</div>
+        <span class="text-3xl font-extrabold tracking-tighter">Mix</span>
       </a>
-      <button class="bg-black ml-[60px]  text-white px-6 py-2.5 rounded-lg flex items-center gap-2 hover:bg-gray-800 transition">
-        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 12h16m-7 6h7"></path></svg>
-        <span class="font-bold">Menu</span>
+      
+      <button class="bg-black text-white px-7 py-2.5 rounded-xl flex items-center gap-2 hover:bg-gray-800 transition shadow-sm">
+        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="3"><path stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 12h16m-7 6h7"></path></svg>
+        <span class="font-extrabold text-[16px]">Menu</span>
       </button>
     </div>
 
-    <div class=" flex-auto max-w-7xl ">
-      <form action="{{ routes.search_url }}" method="get" role="search" class="flex items-center bg-[#f3f4f6] dark:bg-gray-800 rounded-xl overflow-hidden border border-transparent focus-within:ring-1 focus-within:ring-gray-300 transition">
-        <div class="relative flex items-center">
-            <select name="type" class="bg-transparent pl-10 pr-10   text-sm font-medium outline-none cursor-pointer appearance-none dark:text-gray-200">
-                <option  value="product">All products</option>
+    <div class="flex-grow">
+      <form action="/search" method="get" class="flex items-center bg-search rounded-xl overflow-hidden border border-transparent focus-within:ring-2 focus-within:ring-gray-200 transition">
+        <div class="relative flex items-center px-4">
+            <select name="type" class="bg-transparent pr-6 py-3 text-[15px] font-bold outline-none cursor-pointer appearance-none dark:text-gray-200">
+                <option value="product">All products</option>
             </select>
-            <svg class="w-4 h-4 absolute right-2 pointer-events-none text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+            <svg class="w-4 h-4 absolute right-2 pointer-events-none text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2"><path d="M19 9l-7 7-7-7"></path></svg>
         </div>
         <div class="h-6 w-[1px] bg-gray-300 dark:bg-gray-600"></div>
         <input 
           type="text" 
           name="q" 
           placeholder="Search for anything..." 
-          class="bg-transparent grow px-4 py-3 outline-none text-[15px] text-gray-700 dark:text-gray-200 placeholder-gray-500"
+          class="bg-transparent grow px-5 py-3 outline-none text-[15px] font-medium text-gray-700 dark:text-gray-200 placeholder-gray-500"
         >
-        <button type="submit" class="pr-5 pl-2 text-gray-500 hover:text-black dark:hover:text-white">
-           <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2"><path d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path></svg>
+        <button type="submit" class="px-5 text-gray-500 hover:text-black">
+           <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2.5"><path d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path></svg>
         </button>
       </form>
     </div>
 
-    <div class="flex items-center gap-8 flex-shrink-0">
-      <a href="/account/login" class="flex flex-col items-center gap-1 text-gray-800 dark:text-gray-300 hover:text-blue-600 transition group">
-        <svg class="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="1.5"><path d="M15.75 6a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0zM4.501 20.118a7.5 7.5 0 0114.998 0A17.933 17.933 0 0112 21.75c-2.676 0-5.216-.584-7.499-1.632z" /></svg>
-        <span class="text-[11px] font-bold">Login</span>
+    <div class="flex items-center gap-8">
+      <a href="/account/login" class="flex flex-col items-center group">
+        <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="1.5"><path d="M15.75 6a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0zM4.501 20.118a7.5 7.5 0 0114.998 0A17.933 17.933 0 0112 21.75c-2.676 0-5.216-.584-7.499-1.632z" /></svg>
+        <span class="text-[12px] font-extrabold mt-0.5">Login</span>
       </a>
-      <a href="/cart" class="flex flex-col items-center gap-1 text-gray-800 dark:text-gray-300 relative group">
-        <svg class="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="1.5"><path d="M15.75 10.5V6a3.75 3.75 0 10-7.5 0v4.5m11.356-1.993l1.263 12c.07.665-.45 1.243-1.119 1.243H4.25a1.125 1.125 0 01-1.12-1.243l1.264-12A1.125 1.125 0 015.513 7.5h12.974c.576 0 1.059.435 1.119 1.007z" /></svg>
-        <span class="absolute top-0 -right-1 bg-black dark:bg-blue-600 text-white text-[10px] font-bold rounded-full w-4 h-4 flex items-center justify-center">{{ cart.item_count }}</span>
-        <span class="text-[11px] font-bold">Cart</span>
+      <a href="/cart" class="flex flex-col items-center relative">
+        <div class="relative">
+            <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="1.5"><path d="M15.75 10.5V6a3.75 3.75 0 10-7.5 0v4.5m11.356-1.993l1.263 12c.07.665-.45 1.243-1.119 1.243H4.25a1.125 1.125 0 01-1.12-1.243l1.264-12A1.125 1.125 0 015.513 7.5h12.974c.576 0 1.059.435 1.119 1.007z" /></svg>
+            <span class="absolute -top-1 -right-2 bg-black dark:bg-blue-600 text-white text-[10px] font-black rounded-full w-5 h-5 flex items-center justify-center border-2 border-white dark:border-gray-900">0</span>
+        </div>
+        <span class="text-[12px] font-extrabold mt-0.5">Cart</span>
       </a>
     </div>
   </div>
 
-  <div class="max-w-[1400px] mx-auto px-6 py-2 flex items-center justify-between text-[14px] font-semibold border-t border-gray-100 dark:border-gray-800">
+  <div class="max-w-[1380px] mx-auto px-6 py-3 flex items-center justify-between border-t border-gray-100 dark:border-gray-800">
     
-    <nav class="flex items-center gap-6">
-      <a href="/collections/all" class="bg-[#fde047] text-black px-3 py-1.5 rounded-md font-bold flex items-center gap-1">
+    <nav class="flex items-center gap-7">
+      <a href="/collections/all" class="bg-[#fde047] text-black px-4 py-1.5 rounded-lg font-extrabold flex items-center gap-1.5 text-[15px] shadow-sm">
         🔥 Sale
       </a>
-      <div class="flex items-center gap-6 text-gray-800 dark:text-gray-200">
-        <a href="#" class="flex items-center gap-1 hover:text-blue-600">Features <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M19 9l-7 7-7-7"></path></svg></a>
-        <a href="#" class="flex items-center gap-1 hover:text-blue-600">Electronics <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M19 9l-7 7-7-7"></path></svg></a>
-        <a href="#" class="hover:text-blue-600">Art</a>
-        <a href="#" class="hover:text-blue-600">Books</a>
-        <a href="#" class="hover:text-blue-600">Music</a>
-        <a href="#" class="flex items-center gap-1 hover:text-blue-600">Best Deals <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M19 9l-7 7-7-7"></path></svg></a>
-        <a href="#" class="flex items-center gap-1 hover:text-blue-600">More <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M19 9l-7 7-7-7"></path></svg></a>
+      <div class="flex items-center gap-7 text-gray-800 dark:text-gray-200 text-[15px] font-bold">
+        <a href="#" class="flex items-center gap-1 hover:text-blue-600 transition">Features <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="3"><path d="M19 9l-7 7-7-7"></path></svg></a>
+        <a href="#" class="flex items-center gap-1 hover:text-blue-600 transition">Electronics <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="3"><path d="M19 9l-7 7-7-7"></path></svg></a>
+        <a href="#" class="hover:text-blue-600 transition">Art</a>
+        <a href="#" class="hover:text-blue-600 transition">Books</a>
+        <a href="#" class="hover:text-blue-600 transition">Music</a>
+        <a href="#" class="flex items-center gap-1 hover:text-blue-600 transition">Best Deals <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="3"><path d="M19 9l-7 7-7-7"></path></svg></a>
+        <a href="#" class="flex items-center gap-1 hover:text-blue-600 transition">More <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="3"><path d="M19 9l-7 7-7-7"></path></svg></a>
       </div>
     </nav>
 
-    <div class="flex items-center gap-6 text-gray-600 dark:text-gray-400">
-      {%- form 'localization', id: 'HeaderLocalizationForm', class: 'flex items-center gap-6' -%}
-        <div class="flex items-center gap-1 cursor-pointer hover:text-black dark:hover:text-white transition relative">
-          <select name="country_code" onchange="this.form.submit()" class="bg-transparent appearance-none outline-none cursor-pointer pr-4 font-bold">
-            {%- for country in localization.available_countries -%}
-              <option value="{{ country.iso_code }}" {%- if country.iso_code == localization.country.iso_code -%}selected{%- endif -%}>
-                {{ country.name }} ({{ country.currency.iso_code }} {{ country.currency.symbol }})
-              </option>
-            {%- endfor -%}
-          </select>
-          <svg class="w-4 h-4 absolute right-0 pointer-events-none" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"></path></svg>
-        </div>
+    <div class="flex items-center gap-8 text-[14px] font-bold text-gray-600 dark:text-gray-400">
+      <div class="flex items-center gap-1 cursor-pointer hover:text-black transition relative group">
+          <span class="flex items-center gap-2">United States (USD $) <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2.5"><path d="M21 12a9 9 0 01-9 9m9-9a9 9 0 00-9-9m9 9H3m9 9a9 9 0 01-9-9m9 9c1.657 0 3-4.03 3-9s-1.343-9-3-9m0 18c-1.657 0-3-4.03-3-9s1.343-9 3-9m-9 9h18"></path></svg></span>
+      </div>
 
-        <div class="flex items-center gap-1 cursor-pointer hover:text-black dark:hover:text-white transition relative">
-          <select name="locale_code" onchange="this.form.submit()" class="bg-transparent appearance-none outline-none cursor-pointer pr-4 font-bold">
-            {%- for language in localization.available_languages -%}
-              <option value="{{ language.iso_code }}" {%- if language.iso_code == localization.language.iso_code -%}selected{%- endif -%}>
-                {{ language.endonym_name | capitalize }}
-              </option>
-            {%- endfor -%}
-          </select>
-          <svg class="w-3 h-3 absolute right-0 pointer-events-none" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M19 9l-7 7-7-7"></path></svg>
-        </div>
-      {%- endform -%}
+      <div class="flex items-center gap-1 cursor-pointer hover:text-black transition">
+          <span class="flex items-center gap-1">English <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="3"><path d="M19 9l-7 7-7-7"></path></svg></span>
+      </div>
 
-      <button id="theme-toggle" class="flex items-center gap-2 hover:text-black dark:hover:text-white transition">
-        <span class="font-bold">Dark Mode</span>
-        <svg id="theme-icon" class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"></path></svg>
+      <button id="theme-toggle" class="flex items-center gap-2 hover:text-black transition">
+        <span class="font-extrabold">Dark Mode</span>
+        <svg id="theme-icon" class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2"><path d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"></path></svg>
       </button>
     </div>
   </div>
 </header>
-
 <script>
   // DARK MODE LOGIC
   const themeToggleBtn = document.getElementById('theme-toggle');
