@@ -228,11 +228,10 @@
   window.addEventListener('scroll', function () {
     const header = document.getElementById('header-nav');
     if (window.scrollY > 50) {
-      // Classes to add when scrolled
+      
       header.classList.add('bg-white/95', 'shadow-md');
       header.classList.remove('bg-transparent');
     } else {
-      // Classes to return to original state
       header.classList.add('bg-transparent');
       header.classList.remove('bg-white/95', 'shadow-md');
     }
