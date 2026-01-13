@@ -19,28 +19,11 @@
   }
 </style>
 
-<div class="" style="background-color: {{ section.settings.bg_color }};color: {{ section.settings.text_color }};">
-  <div class="max-w-[1300px] flex justify-between h-auto py-6 mx-auto uppercase   items-center font-bold">
-    <a
-      href="{{ section.settings.link_1 }}"
-      class="flex italic underline hover:opacity-80"
-    >
-      {{ section.settings.text_1 }}
-    </a>
-
-    <a
-      href="{{ section.settings.link_2 }}"
-      class="flex hover:opacity-80"
-    >
-      {{ section.settings.text_2 }}
-    </a>
-
-    <a
-      href="{{ section.settings.link_3 }}"
-      class="flex italic underline hover:opacity-80"
-    >
-      {{ section.settings.text_3 }}
-    </a>
+<div id="announcement-bar" class="transition-all duration-300 ease-in-out overflow-hidden" style="background-color: {{ section.settings.bg_color }};color: {{ section.settings.text_color }};">
+  <div class="max-w-[1300px] flex justify-between h-auto py-6 mx-auto uppercase items-center font-bold">
+    <a href="{{ section.settings.link_1 }}" class="flex italic underline hover:opacity-80">{{ section.settings.text_1 }}</a>
+    <a href="{{ section.settings.link_2 }}" class="flex hover:opacity-80">{{ section.settings.text_2 }}</a>
+    <a href="{{ section.settings.link_3 }}" class="flex italic underline hover:opacity-80">{{ section.settings.text_3 }}</a>
   </div>
 </div>
 
@@ -227,13 +210,35 @@
 <script>
   window.addEventListener('scroll', function () {
     const header = document.getElementById('header-nav');
+    const announcementBar = document.getElementById('announcement-bar');
+    
     if (window.scrollY > 50) {
-      
+      // 1. Style the Navigation Header
       header.classList.add('bg-white/95', 'shadow-md');
       header.classList.remove('bg-transparent');
+      
+      // 2. Remove the GAP: Move header to the absolute top
+      header.style.top = '0';
+      
+      // 3. Hide the Announcement Bar
+      if (announcementBar) {
+        announcementBar.style.maxHeight = '0px';
+        announcementBar.style.opacity = '0';
+      }
     } else {
+      // 1. Reset Navigation Header
       header.classList.add('bg-transparent');
       header.classList.remove('bg-white/95', 'shadow-md');
+      
+      // 2. Restore the GAP (if you want it back when at the very top)
+      // If you want the header to stay at the top always, leave this as '0'
+      header.style.top = ''; 
+      
+      // 3. Show the Announcement Bar
+      if (announcementBar) {
+        announcementBar.style.maxHeight = '200px'; // Tall enough to fit content
+        announcementBar.style.opacity = '1';
+      }
     }
   });
 </script>

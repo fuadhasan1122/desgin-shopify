@@ -1,0 +1,38 @@
+{% comment %} <div class="" style="background-color: {{ section.settings.bg_color }};color: {{ section.settings.text_color }};">
+  <div class="max-w-[1300px] flex justify-between h-auto py-6 mx-auto uppercase   items-center font-bold">
+    <a
+      href="{{ section.settings.link_1 }}"
+      class="flex italic underline hover:opacity-80"
+    >
+      {{ section.settings.text_1 }}
+    </a>
+
+    <a
+      href="{{ section.settings.link_2 }}"
+      class="flex hover:opacity-80"
+    >
+      {{ section.settings.text_2 }}
+    </a>
+
+    <a
+      href="{{ section.settings.link_3 }}"
+      class="flex italic underline hover:opacity-80"
+    >
+      {{ section.settings.text_3 }}
+    </a>
+  </div>
+</div>
+
+{% schema %}
+{
+    "name": "Taiga Announce",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Top Bar Settings"
+    },
+    { "type": "color", "id": "bg_color", "label": "Bar Background", "default": "#e50b9c" },
+    { "type": "color", "id": "text_color", "label": "Bar Text", "default": "#ffffff" }
+  ]
+}
+{% endschema %} {% endcomment %}
