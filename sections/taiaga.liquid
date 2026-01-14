@@ -38,21 +38,26 @@
       px-0 py-[40px] lg:px-[60px] py-6 mt-0 text-black fixed bg-transparent transition-all duration-300 hover:bg-white/90
     "
   >
-    <!-- LEFT -->
-    <nav class="flex items-center gap-6">
-      <button id="open-menu" class="p-2 hover:bg-black/5 rounded-full transition-colors">
-        <svg class="w-7 h-7 md:w-9 md:h-9" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-            d="M4 6h16M4 12h16m-7 6h7"></path>
-        </svg>
-      </button>
 
-      <div class=" md:flex space-x-2 sm:space-x-8 text-3xl">
-        <a href="/" class="uppercase font-bold hover:text-pink-800">Home</a>
-        <a href="/collections/all" class="uppercase font-bold hover:text-pink-800">Shop</a>
-        <a href="/pages/about" class="uppercase font-bold hover:text-pink-800">About</a>
-      </div>
-    </nav>
+   <!-- LEFT -->
+ <nav class="flex items-center gap-6">
+    <button id="open-menu" class="p-2 hover:bg-black/5 rounded-full transition-colors">
+      <svg class="w-7 h-7 md:w-9 md:h-9" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+          d="M4 6h16M4 12h16m-7 6h7"></path>
+      </svg>
+    </button>
+
+    <!-- Normal Menu (Desktop) -->
+    <div class=" md:flex space-x-8 text-3xl">
+      <a href="/" class="uppercase font-bold hover:text-pink-800">Home</a>
+      <a href="/collections/all" class="uppercase font-bold hover:text-pink-800">Shop</a>
+      <a href="/pages/about" class="uppercase font-bold hover:text-pink-800">About</a>
+    </div>
+  </nav>
+
+
+
 
     <!-- CENTER LOGO -->
     <div class="absolute left-1/2 -translate-x-1/2">
@@ -116,6 +121,69 @@
       </button>
     </div>
   </header>
+
+  <!-- DRAWER -->
+<div id="menu-drawer" class="fixed inset-0 z-[100] invisible">
+
+  <!-- Overlay -->
+  <div id="menu-overlay"
+       class="absolute inset-0 bg-black/50 opacity-0 transition-opacity duration-300">
+  </div>
+
+  <!-- Drawer Panel -->
+  <div id="menu-panel"
+       class="absolute left-0 top-0 h-full w-[85%] max-w-sm bg-white
+              -translate-x-full transition-transform duration-300
+              flex flex-col">
+
+    <!-- Drawer Header -->
+    <div class="flex items-center justify-between p-6 border-b">
+      <span class="text-xl font-bold">Menu</span>
+      <button id="close-menu" class="p-2 rounded-full hover:bg-black/5">✕</button>
+    </div>
+
+    <!-- Drawer Links -->
+    <nav class="flex flex-col gap-6 p-6 text-2xl">
+      <a href="/" class="uppercase font-bold hover:text-pink-800">Home</a>
+      <a href="/collections/all" class="uppercase font-bold hover:text-pink-800">Shop</a>
+      <a href="/pages/about" class="uppercase font-bold hover:text-pink-800">About</a>
+    </nav>
+
+    <!-- Country (Bottom) -->
+    <div class="mt-auto p-6 border-t flex items-center gap-3">
+      <img src="https://flagcdn.com/w80/us.png"
+           class="w-8 h-8 rounded-full object-cover">
+      <span class="text-sm font-medium">United States</span>
+    </div>
+
+  </div>
+</div>
+
+<!-- SCRIPT -->
+<script>
+  const openBtn = document.getElementById('open-menu');
+  const closeBtn = document.getElementById('close-menu');
+  const drawer = document.getElementById('menu-drawer');
+  const panel = document.getElementById('menu-panel');
+  const overlay = document.getElementById('menu-overlay');
+
+  function openDrawer() {
+    drawer.classList.remove('invisible');
+    overlay.classList.remove('opacity-0');
+    panel.classList.remove('-translate-x-full');
+  }
+
+  function closeDrawer() {
+    overlay.classList.add('opacity-0');
+    panel.classList.add('-translate-x-full');
+    setTimeout(() => drawer.classList.add('invisible'), 300);
+  }
+
+  openBtn.addEventListener('click', openDrawer);
+  closeBtn.addEventListener('click', closeDrawer);
+  overlay.addEventListener('click', closeDrawer);
+</script>
+  
 
  <div class="absolute bottom-0 left-0 w-full pointer-events-none z-20">
   
