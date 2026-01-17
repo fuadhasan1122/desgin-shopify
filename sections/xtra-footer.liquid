@@ -1,0 +1,148 @@
+<script src="https://cdn.tailwindcss.com"></script>
+
+{%- style -%}
+  .section-{{ section.id }}-padding {
+    padding-top: {{ section.settings.padding_top }}px;
+    padding-bottom: {{ section.settings.padding_bottom }}px;
+  }
+  .newsletter-input-{{ section.id }} {
+    border-radius: {{ section.settings.input_roundness }}px;
+  }
+{%- endstyle -%}
+
+<footer class="bg-[#f8f8f8] section-{{ section.id }}-padding font-sans text-[#333] w-full border-t border-gray-200">
+  
+  <div class="max-w-[95%] mx-auto flex flex-wrap justify-center items-center gap-6 md:gap-14 mb-10 opacity-70">
+    <span class="text-xl font-bold tracking-tighter">XTRA&reg;</span>
+    <span class="text-lg italic">FLESSENTUIN</span>
+    <span class="text-lg font-semibold">NordicChairs</span>
+    <span class="text-xl font-black">VINQ.nl</span>
+    <span class="text-xl font-light tracking-widest uppercase">Bloom</span>
+    <span class="text-lg">oolaboo</span>
+  </div>
+
+  <div class="max-w-[95%] mx-auto grid grid-cols-1 md:grid-cols-3 gap-4 mb-12 text-[13px] border-b border-gray-100 pb-10">
+    <div class="flex items-center justify-center gap-2">
+      <span class="text-[#22c55e] font-bold text-lg">✓</span> {{ section.settings.badge_1 }}
+    </div>
+    <div class="flex items-center justify-center gap-2">
+      <span class="text-[#22c55e] font-bold text-lg">✓</span> {{ section.settings.badge_2 }}
+    </div>
+    <div class="flex items-center justify-center gap-2">
+      <span class="text-[#22c55e] font-bold text-lg">✓</span> {{ section.settings.badge_3 }}
+    </div>
+  </div>
+
+  <div class="max-w-[95%] mx-auto grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 mb-16">
+    
+    <div class="relative">
+      <h3 class="font-bold mb-4 uppercase text-[12px] tracking-widest">{{ section.settings.support_heading }}</h3>
+      <p class="text-[13px] mb-6 leading-relaxed text-gray-600">{{ section.settings.support_text }}</p>
+      <div class="space-y-3 text-[13px] font-semibold">
+        <a href="tel:{{ section.settings.phone }}" class="flex items-center gap-2 hover:text-blue-900 transition-colors">
+          <span class="text-base">📞</span> {{ section.settings.phone }}
+        </a>
+        <a href="mailto:{{ section.settings.email }}" class="flex items-center gap-2 hover:text-blue-900 transition-colors">
+          <span class="text-base">✉</span> {{ section.settings.email }}
+        </a>
+      </div>
+      <img src="https://cdn.shopify.com/s/files/1/0533/2089/files/placeholder-woman.png" 
+           alt="Support" 
+           class="absolute -bottom-12 right-0 w-24 hidden xl:block pointer-events-none opacity-90">
+    </div>
+
+    {%- for block in section.blocks -%}
+      {%- if block.type == 'link_list' -%}
+        <div {{ block.shopify_attributes }}>
+          <h3 class="font-bold mb-4 uppercase text-[12px] tracking-widest">{{ block.settings.heading }}</h3>
+          <ul class="text-[13px] space-y-3 text-gray-600">
+            {%- for link in block.settings.menu.links -%}
+              <li><a href="{{ link.url }}" class="hover:text-black transition-colors">{{ link.title }}</a></li>
+            {%- endfor -%}
+          </ul>
+        </div>
+      {%- endif -%}
+    {%- endfor -%}
+
+    <div>
+      <h3 class="font-bold mb-4 uppercase text-[12px] tracking-widest">Follow us</h3>
+      <div class="flex gap-4 mb-8">
+        {%- render 'social-icons' -%}
+      </div>
+      
+      <h3 class="font-bold mb-3 text-[12px] tracking-widest uppercase">Subscribe</h3>
+      {% form 'customer', id: 'FooterNewsletter' %}
+        <div class="flex flex-col gap-2">
+          <input type="email" name="contact[email]" placeholder="Email" 
+                 class="newsletter-input-{{ section.id }} w-full border border-gray-300 p-2.5 text-[13px] focus:outline-none focus:border-black">
+          <button type="submit" 
+                  class="w-full bg-[#001a57] text-white font-bold py-3 px-6 rounded-full hover:bg-blue-800 transition-colors uppercase text-[11px] tracking-widest">
+            Subscribe
+          </button>
+        </div>
+      {% endform %}
+    </div>
+  </div>
+
+  <div class="max-w-[95%] mx-auto border-t border-gray-200 pt-6 flex flex-col md:flex-row justify-between items-center gap-6">
+    <div class="text-[11px] text-gray-500 uppercase tracking-tight">
+      <span class="font-bold text-black text-[14px] lowercase">{{ shop.name }}</span> &copy; {{ 'now' | date: "%Y" }} {{ section.settings.copyright_text }}
+    </div>
+    
+    <div class="flex flex-wrap gap-3 items-center">
+      {%- if section.settings.show_payment_icons -%}
+        {%- for type in shop.enabled_payment_types -%}
+          {{ type | payment_type_svg_tag: class: 'h-5 w-auto' }}
+        {%- endfor -%}
+      {%- endif -%}
+      
+      <button onclick="window.scrollTo({top: 0, behavior: 'smooth'})" 
+              class="ml-4 bg-[#001a57] text-white w-10 h-10 flex items-center justify-center rounded-full shadow-md hover:bg-blue-800 transition-transform hover:-translate-y-1">
+        ▲
+      </button>
+    </div>
+  </div>
+</footer>
+
+{% schema %}
+{
+  "name": "Xtra Footer Pro",
+  "settings": [
+    { "type": "header", "content": "Trust Badges" },
+    { "type": "text", "id": "badge_1", "default": "Everything in stock and quick delivery", "label": "Badge 1" },
+    { "type": "text", "id": "badge_2", "default": "Also pickup locations", "label": "Badge 2" },
+    { "type": "text", "id": "badge_3", "default": "We deliver CO2 neutral", "label": "Badge 3" },
+    { "type": "header", "content": "Customer Support" },
+    { "type": "text", "id": "support_heading", "default": "Customer support", "label": "Heading" },
+    { "type": "textarea", "id": "support_text", "default": "Available between 8AM to 8PM.", "label": "Text" },
+    { "type": "text", "id": "phone", "default": "0123456789", "label": "Phone" },
+    { "type": "text", "id": "email", "default": "support@someone.online", "label": "Email" },
+    { "type": "header", "content": "Newsletter Style" },
+    { "type": "range", "id": "input_roundness", "min": 0, "max": 50, "step": 2, "default": 4, "unit": "px", "label": "Input Roundness" },
+    { "type": "header", "content": "Footer Bottom" },
+    { "type": "text", "id": "copyright_text", "default": "Theme Xtra, Powered by Shopify", "label": "Copyright Text" },
+    { "type": "checkbox", "id": "show_payment_icons", "default": true, "label": "Show Payment Icons" },
+    { "type": "range", "id": "padding_top", "min": 20, "max": 120, "step": 4, "default": 60, "label": "Padding Top" },
+    { "type": "range", "id": "padding_bottom", "min": 10, "max": 80, "step": 2, "default": 24, "label": "Padding Bottom" }
+  ],
+  "blocks": [
+    {
+      "type": "link_list",
+      "name": "Menu Column",
+      "settings": [
+        { "type": "text", "id": "heading", "default": "Quick Links", "label": "Heading" },
+        { "type": "link_list", "id": "menu", "label": "Select Menu" }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Xtra Footer Pro",
+      "blocks": [
+        { "type": "link_list", "settings": { "heading": "Support" } },
+        { "type": "link_list", "settings": { "heading": "About us" } }
+      ]
+    }
+  ]
+}
+{% endschema %}

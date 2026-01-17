@@ -1,0 +1,185 @@
+<script src="https://cdn.tailwindcss.com"></script>
+
+{%- style -%}
+  .section-{{ section.id }}-padding {
+    padding-top: {{ section.settings.padding_top | times: 0.75 | round: 0 }}px;
+    padding-bottom: {{ section.settings.padding_bottom | times: 0.75 | round: 0 }}px;
+  }
+
+  @media screen and (min-width: 750px) {
+    .section-{{ section.id }}-padding {
+      padding-top: {{ section.settings.padding_top }}px;
+      padding-bottom: {{ section.settings.padding_bottom }}px;
+    }
+  }
+
+  /* Match the light-gray pill-shaped input from the image */
+  .newsletter-input {
+    background-color: #f4f4f4 !important;
+    border: none !important;
+    border-radius: 50px !important;
+  }
+{%- endstyle -%}
+
+<footer class="bg-white text-black border-t border-gray-100 section-{{ section.id }}-padding">
+  <div class="max-w-[1400px] mx-auto px-6 lg:px-12">
+    
+    <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-24 mb-16">
+      
+      {%- if section.settings.newsletter_enable -%}
+        <div class="lg:col-span-5">
+          <h2 class="text-3xl font-medium mb-4 tracking-tight">{{ section.settings.newsletter_heading }}</h2>
+          <p class="text-gray-600 mb-8">Subscribe for store updates and discounts.</p>
+
+          {%- form 'customer', id: 'FooterNewsletter', class: 'relative mb-6' -%}
+            <input type="hidden" name="contact[tags]" value="newsletter">
+            <div class="relative group max-w-md">
+              <input
+                type="email"
+                name="contact[email]"
+                class="newsletter-input w-full py-4 px-6 pr-14 focus:outline-none transition-all"
+                placeholder="Email"
+                required
+              >
+              <button type="submit" class="absolute right-5 top-1/2 -translate-y-1/2 text-black flex items-center justify-center" aria-label="Submit">
+      <svg 
+        class="w-5 h-5" 
+        fill="none" 
+        stroke="currentColor" 
+        viewBox="0 0 24 24" 
+        xmlns="http://www.w3.org/2000/svg"
+      >
+        <path 
+          stroke-linecap="round" 
+          stroke-linejoin="round" 
+          stroke-width="2" 
+          d="M9 5l7 7-7 7"
+        ></path>
+      </svg>
+    </button>
+            </div>
+          {%- endform -%}
+
+          <p class="text-xs text-gray-500 leading-relaxed max-w-sm">
+            By subscribing you agree to the
+            <a href="/policies/terms-of-service" class="underline underline-offset-4">Terms of Use</a> &
+            <a href="/policies/privacy-policy" class="underline underline-offset-4">Privacy Policy</a>.
+          </p>
+        </div>
+      {%- endif -%}
+
+      <div class="lg:col-span-7 grid grid-cols-1 md:grid-cols-3 gap-8">
+        {%- for block in section.blocks -%}
+          <div {{ block.shopify_attributes }}>
+            {%- if block.settings.heading != blank -%}
+              <h2 class="text-xl font-medium mb-6">{{ block.settings.heading }}</h2>
+            {%- endif -%}
+
+            {%- case block.type -%}
+              {%- when 'link_list' -%}
+                <ul class="space-y-3">
+                  {%- for link in block.settings.menu.links -%}
+                    <li>
+                      <a href="{{ link.url }}" class="text-gray-600 hover:text-black transition-colors">
+                        {{ link.title }}
+                      </a>
+                    </li>
+                  {%- endfor -%}
+                </ul>
+
+              {%- when 'text' -%}
+                <div class="text-gray-600 leading-relaxed mb-4">
+                  {{ block.settings.subtext }}
+                </div>
+                {%- if block.settings.show_learn_more -%}
+                   <a href="{{ block.settings.link_url }}" class="inline-block font-medium border-b border-black pb-1">Learn More</a>
+                {%- endif -%}
+            {%- endcase -%}
+          </div>
+        {%- endfor -%}
+      </div>
+    </div>
+     <div class="pt-8 border-t border-gray-100 flex flex-col md:flex-row justify-between items-end gap-10">
+      
+      <div class="flex flex-col gap-6">
+        {%- if section.settings.enable_country_selector -%}
+          <div class="flex items-center gap-2 cursor-pointer border border-gray-200 rounded px-3 py-1.5 w-max">
+            <span class="text-lg">🇺🇸</span>
+            <span class="text-sm">United States (USD $)</span>
+            <svg class="w-3 h-3 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M19 9l-7 7-7-7" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path></svg>
+          </div>
+        {%- endif -%}
+
+        <div class="text-sm text-gray-500 tracking-tight">
+          <span>&copy; {{ 'now' | date: '%Y' }} {{ shop.name | uppercase }}.</span>
+          <a href="{{ shop.url }}" class="hover:underline">{{ powered_by_link }}</a>
+        </div>
+      </div>
+
+      <div class="flex flex-col items-end gap-6 w-full md:w-auto">
+  {%- if section.settings.show_social -%}
+    <div class="flex justify-end w-full">
+      {%- render 'social-icons' -%}
+    </div>
+  {%- endif -%}
+
+  <div class="flex flex-wrap justify-end items-center gap-x-8 gap-y-4">
+    {%- if section.settings.show_policy -%}
+      <div class="flex gap-6 text-sm font-normal">
+        {%- for policy in shop.policies -%}
+          <a href="{{ policy.url }}" class="hover:text-gray-400 transition-colors whitespace-nowrap">
+            {{- policy.title -}}
+          </a>
+        {%- endfor -%}
+      </div>
+    {%- endif -%}
+
+    {%- if section.settings.payment_enable -%}
+      <div class="flex gap-2">
+        {%- for type in shop.enabled_payment_types -%}
+          {{ type | payment_type_svg_tag: class: 'h-5 w-auto' }}
+        {%- endfor -%}
+      </div>
+    {%- endif -%}
+  </div>
+</div>
+    </div>
+    
+  </div>
+</footer>
+
+{% schema %}
+{
+  "name": "Custom Footer",
+  "blocks": [
+    {
+      "type": "link_list",
+      "name": "Menu",
+      "settings": [
+        { "type": "inline_richtext", "id": "heading", "label": "Heading", "default": "Menu" },
+        { "type": "link_list", "id": "menu", "label": "Menu" }
+      ]
+    },
+    {
+      "type": "text",
+      "name": "Text / About",
+      "settings": [
+        { "type": "inline_richtext", "id": "heading", "label": "Heading", "default": "About" },
+        { "type": "richtext", "id": "subtext", "label": "Text" },
+        { "type": "checkbox", "id": "show_learn_more", "label": "Show Learn More Link", "default": true },
+        { "type": "url", "id": "link_url", "label": "Learn More URL" }
+      ]
+    }
+  ],
+  "settings": [
+    { "type": "checkbox", "id": "newsletter_enable", "default": true, "label": "Enable newsletter" },
+    { "type": "inline_richtext", "id": "newsletter_heading", "default": "Subscribe to get 10% OFF", "label": "Newsletter heading" },
+    { "type": "checkbox", "id": "enable_country_selector", "default": true, "label": "Country selector" },
+    { "type": "checkbox", "id": "payment_enable", "default": true, "label": "Payment icons" },
+    { "type": "checkbox", "id": "show_social", "default": true, "label": "Social icons" },
+    { "type": "checkbox", "id": "show_policy", "default": true, "label": "Policies" },
+    { "type": "range", "id": "padding_top", "min": 0, "max": 100, "step": 4, "default": 64, "label": "Padding top" },
+    { "type": "range", "id": "padding_bottom", "min": 0, "max": 100, "step": 4, "default": 32, "label": "Padding bottom" }
+  ]
+}
+{% endschema %}

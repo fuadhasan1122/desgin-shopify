@@ -29,7 +29,7 @@
 
 <section
   class="relative min-h-[420px] sm:min-h-[550px] md:min-h-[700px] lg:min-h-[900px] bg-cover bg-center"
-  style="background: linear-gradient(90deg, #FDE047 0%, #FB923C 30%, #EC4899 70%, #2DD4BF 100%), url('{{ section.settings.hero_bg_image | img_url: '1800x' }}'); background-blend-mode: overlay; background-size: cover; background-position: center;"
+  style="background: linear-gradient(90deg, #FDE047 0%, #FB923C 30%, #EC4899 70%, #2DD4BF 100%), url('{{ section.settings.hero_bg_image | img_url: '1600x' }}');  background-blend-mode: overlay; background-size: cover; background-position: center;"
 >
   <header
     id="header-nav"
@@ -41,14 +41,14 @@
 
    <!-- LEFT -->
  <nav class="flex items-center gap-6">
-    <button id="open-menu" class="p-2 hover:bg-black/5 rounded-full transition-colors">
+    <button   id="open-menu" class="p-2 hover:bg-black/5 rounded-full transition-colors">
       <svg class="w-7 h-7 md:w-9 md:h-9" fill="none" stroke="currentColor" viewBox="0 0 24 24">
         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
           d="M4 6h16M4 12h16m-7 6h7"></path>
       </svg>
     </button>
 
-    <!-- Normal Menu (Desktop) -->
+    
     <div class=" md:flex space-x-8 text-3xl">
       <a href="/" class="uppercase font-bold hover:text-pink-800">Home</a>
       <a href="/collections/all" class="uppercase font-bold hover:text-pink-800">Shop</a>
@@ -210,7 +210,7 @@
 
 
 </section>
-<div class="relative z-30 bg-white py-20 px-6">
+<div class="relative z-30 bg-white py-5 px-10">
   <div class="max-w-[900px] mx-auto text-center">
     <h2 class="text-3xl md:text-5xl leading-[1.4] text-gray-800 font-medium tracking-tight">
       {{ section.settings.under_wave_text_1 }} 

@@ -9,94 +9,73 @@
   %}
 {% endcomment %}
 
-<ul class="list-unstyled list-social{% if class %} {{ class}}{% endif %}" role="list">
+{% comment %}
+  Renders social icons in a single horizontal line.
+{% endcomment %}
+
+<ul class="flex flex-row items-center justify-end gap-4 list-none p-0 m-0" role="list">
   {%- if settings.social_facebook_link != blank -%}
-    <li class="list-social__item">
-      <a href="{{ settings.social_facebook_link }}" class="link list-social__link">
-        <span class="svg-wrapper">
+    <li>
+      <a href="{{ settings.social_facebook_link }}" class="block text-black hover:opacity-70 transition-opacity">
+        <span class="w-5 h-5 block">
           {{- 'icon-facebook.svg' | inline_asset_content -}}
         </span>
-        <span class="visually-hidden">{{ 'general.social.links.facebook' | t }}</span>
+        <span class="visually-hidden">Facebook</span>
       </a>
     </li>
   {%- endif -%}
+
   {%- if settings.social_instagram_link != blank -%}
-    <li class="list-social__item">
-      <a href="{{ settings.social_instagram_link }}" class="link list-social__link">
-        <span class="svg-wrapper">
+    <li>
+      <a href="{{ settings.social_instagram_link }}" class="block text-black hover:opacity-70 transition-opacity">
+        <span class="w-5 h-5 block">
           {{- 'icon-instagram.svg' | inline_asset_content -}}
         </span>
-        <span class="visually-hidden">{{ 'general.social.links.instagram' | t }}</span>
+        <span class="visually-hidden">Instagram</span>
       </a>
     </li>
   {%- endif -%}
+
   {%- if settings.social_youtube_link != blank -%}
-    <li class="list-social__item">
-      <a href="{{ settings.social_youtube_link }}" class="link list-social__link">
-        <span class="svg-wrapper">
+    <li>
+      <a href="{{ settings.social_youtube_link }}" class="block text-black hover:opacity-70 transition-opacity">
+        <span class="w-5 h-5 block">
           {{- 'icon-youtube.svg' | inline_asset_content -}}
         </span>
-        <span class="visually-hidden">{{ 'general.social.links.youtube' | t }}</span>
+        <span class="visually-hidden">YouTube</span>
       </a>
     </li>
   {%- endif -%}
+
   {%- if settings.social_tiktok_link != blank -%}
-    <li class="list-social__item">
-      <a href="{{ settings.social_tiktok_link }}" class="link list-social__link">
-        <span class="svg-wrapper">
+    <li>
+      <a href="{{ settings.social_tiktok_link }}" class="block text-black hover:opacity-70 transition-opacity">
+        <span class="w-5 h-5 block">
           {{- 'icon-tiktok.svg' | inline_asset_content -}}
         </span>
-        <span class="visually-hidden">{{ 'general.social.links.tiktok' | t }}</span>
+        <span class="visually-hidden">TikTok</span>
       </a>
     </li>
   {%- endif -%}
+
   {%- if settings.social_twitter_link != blank -%}
-    <li class="list-social__item">
-      <a href="{{ settings.social_twitter_link }}" class="link list-social__link">
-        <span class="svg-wrapper">
+    <li>
+      <a href="{{ settings.social_twitter_link }}" class="block text-black hover:opacity-70 transition-opacity">
+        <span class="w-5 h-5 block">
           {{- 'icon-twitter.svg' | inline_asset_content -}}
         </span>
-        <span class="visually-hidden">{{ 'general.social.links.twitter' | t }}</span>
+        <span class="visually-hidden">X (Twitter)</span>
       </a>
     </li>
   {%- endif -%}
+
   {%- if settings.social_pinterest_link != blank -%}
-    <li class="list-social__item">
-      <a href="{{ settings.social_pinterest_link }}" class="link list-social__link">
-        <span class="svg-wrapper">
+    <li>
+      <a href="{{ settings.social_pinterest_link }}" class="block text-black hover:opacity-70 transition-opacity">
+        <span class="w-5 h-5 block">
           {{- 'icon-pinterest.svg' | inline_asset_content -}}
         </span>
-        <span class="visually-hidden">{{ 'general.social.links.pinterest' | t }}</span>
-      </a>
-    </li>
-  {%- endif -%}
-  {%- if settings.social_snapchat_link != blank -%}
-    <li class="list-social__item">
-      <a href="{{ settings.social_snapchat_link }}" class="link list-social__link">
-        <span class="svg-wrapper">
-          {{- 'icon-snapchat.svg' | inline_asset_content -}}
-        </span>
-        <span class="visually-hidden">{{ 'general.social.links.snapchat' | t }}</span>
-      </a>
-    </li>
-  {%- endif -%}
-  {%- if settings.social_tumblr_link != blank -%}
-    <li class="list-social__item">
-      <a href="{{ settings.social_tumblr_link }}" class="link list-social__link">
-        <span class="svg-wrapper">
-          {{- 'icon-tumblr.svg' | inline_asset_content -}}
-        </span>
-        <span class="visually-hidden">{{ 'general.social.links.tumblr' | t }}</span>
-      </a>
-    </li>
-  {%- endif -%}
-  {%- if settings.social_vimeo_link != blank -%}
-    <li class="list-social__item">
-      <a href="{{ settings.social_vimeo_link }}" class="link list-social__link">
-        <span class="svg-wrapper">
-          {{- 'icon-vimeo.svg' | inline_asset_content -}}
-        </span>
-        <span class="visually-hidden">{{ 'general.social.links.vimeo' | t }}</span>
+        <span class="visually-hidden">Pinterest</span>
       </a>
     </li>
   {%- endif -%}
